@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+# React Nanodegree Would You Rather?
+
+This project was created as the last project in React Nanodegree by Udacity.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
