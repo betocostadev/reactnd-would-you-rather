@@ -2,10 +2,11 @@ import { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading-bar'
 import { handleInitialData } from './store/actions/shared'
-import './App.css'
+import Home from './pages/Home'
+import Login from './pages/Login'
 
 const App = (props) => {
-  const { dispatch } = props
+  const { dispatch, loading, authedUser } = props
 
   useEffect(() => {
     dispatch(handleInitialData())
@@ -14,28 +15,21 @@ const App = (props) => {
   return (
     <Fragment>
       <LoadingBar />
-      <div className='App'>
-        <header className='App-header'>
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className='App-link'
-            href='https://reactjs.org'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Learn React
-          </a>
-        </header>
+      <div className='container'>
+        <h1>App</h1>
+        {loading && <p>Loading...</p>}
+        {!loading && authedUser ? <Home /> : <Login />}
       </div>
     </Fragment>
   )
 }
 
-function mapStateToProps({ authedUser }) {
+function mapStateToProps({ authedUser, questions }) {
+  console.log(questions)
+  console.log(Object.keys(questions))
   return {
-    loading: authedUser === null,
+    loading: !Object.keys(questions).length,
+    authedUser,
   }
 }
 
