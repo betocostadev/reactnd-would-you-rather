@@ -1,9 +1,87 @@
+import { useState } from 'react'
+import { connect } from 'react-redux'
+import char1 from '../assets/avatars/char1.svg'
+import char2 from '../assets/avatars/char2.svg'
+import char3 from '../assets/avatars/char3.svg'
+
+import Box from '@mui/material/Box'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import Button from '@mui/material/Button'
+import { handleLogUser } from '../store/actions/authedUser'
+
 const Login = (props) => {
+  const { users, dispatch } = props
+  const [user, setUser] = useState('')
+
+  const handleChange = (event) => {
+    // console.log(event.target.value)
+    // console.log(users.find((u) => u.id === event.target.value))
+    setUser(event.target.value)
+  }
+
+  const handleLogin = () => {
+    dispatch(handleLogUser(user))
+  }
+
   return (
     <div>
       <h2>Login</h2>
+      {users.length > 0 && (
+        <div>
+          <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+              <InputLabel id='select-user-label'>Select User</InputLabel>
+              <Select
+                labelId='select-user-label'
+                id='select-user'
+                value={user}
+                label='Age'
+                onChange={handleChange}
+              >
+                {users.map((u) => (
+                  <MenuItem key={u.id} value={u.id}>
+                    <img
+                      src={
+                        u.name.includes('Sarah')
+                          ? char1
+                          : u.name.includes('Tyler')
+                          ? char2
+                          : char3
+                      }
+                      alt={u.name}
+                    />
+                    {u.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          <div>
+            <Button
+              variant='contained'
+              disabled={!user.length}
+              onClick={handleLogin}
+            >
+              Log in!
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
 
-export default Login
+function mapStateToProps({ users }) {
+  const usersArr = Object.values({ ...users })
+
+  return {
+    users: usersArr
+      ? usersArr.map((u) => ({ id: u.id, name: u.name, avatar: u.avatarURL }))
+      : [],
+  }
+}
+
+export default connect(mapStateToProps)(Login)

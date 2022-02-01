@@ -15,18 +15,21 @@ const App = (props) => {
   return (
     <Fragment>
       <LoadingBar />
+      <h1 className='header'>Would you rather?</h1>
       <div className='container'>
-        <h1>App</h1>
-        {loading && <p>Loading...</p>}
-        {!loading && authedUser ? <Home /> : <Login />}
+        {loading ? (
+          <h2>Loading...</h2>
+        ) : !loading && authedUser ? (
+          <Home />
+        ) : (
+          <Login />
+        )}
       </div>
     </Fragment>
   )
 }
 
 function mapStateToProps({ authedUser, questions }) {
-  console.log(questions)
-  console.log(Object.keys(questions))
   return {
     loading: !Object.keys(questions).length,
     authedUser,

@@ -6,3 +6,16 @@ export function setAuthedUser(id) {
     id,
   }
 }
+
+export function handleLogUser(id) {
+  return async (dispatch) => {
+    try {
+      console.log('id is', id)
+      dispatch(setAuthedUser(id))
+    } catch (error) {
+      console.warn('error in user selection: ', error)
+      dispatch(setAuthedUser(null))
+      alert('There was an error.')
+    }
+  }
+}

@@ -10,5 +10,15 @@ body {
 .container {
   max-width: 1000px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
+}
+
+.header {
+  width: 100%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  text-align: center;
+  color: white;
+  background-color: #4471ef;
 }
