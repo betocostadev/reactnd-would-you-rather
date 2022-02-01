@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import { handleLogUser } from '../store/actions/authedUser'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -13,18 +14,51 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import MenuItem from '@mui/material/MenuItem'
 
-const pages = ['Home', 'New Question', 'Leaderboard']
+const pages = ['Home', 'New Question', 'Leader Board']
 
 const Nav = (props) => {
   const { user, dispatch } = props
   const [anchorElNav, setAnchorElNav] = useState(null)
+  const location = useLocation()
+  const navigate = useNavigate()
+  console.log(location)
 
   const handleOpenNavMenu = (event) => {
+    // console.log(event)
     setAnchorElNav(event.currentTarget)
   }
 
-  const handleCloseNavMenu = () => {
+  const handleCloseNavMenu = (event) => {
     setAnchorElNav(null)
+    // console.log(event.target.value)
+  }
+
+  const handleNavigate = (page) => {
+    switch (page) {
+      case 'Home':
+        navigate('/')
+        break
+      case 'Leader Board':
+        navigate('/leader-board')
+        break
+      case 'New Question':
+        navigate('/new-question')
+        break
+      default:
+        break
+    }
+    handleCloseNavMenu()
+  }
+
+  const getFontWeight = (page) => {
+    const { pathname } = location
+    if (
+      (page === 'Home' && pathname === '/') ||
+      (page === 'Leader Board' && pathname === '/leader-board') ||
+      (page === 'New Question' && pathname === '/new-question')
+    ) {
+      return 700
+    } else return 400
   }
 
   const handleLogout = () => {
@@ -74,7 +108,7 @@ const Nav = (props) => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleNavigate(page)}>
                   <Typography textAlign='center'>{page}</Typography>
                 </MenuItem>
               ))}
@@ -92,9 +126,15 @@ const Nav = (props) => {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                onClick={() => handleNavigate(page)}
+                sx={{
+                  my: 2,
+                  color: 'white',
+                  display: 'block',
+                  fontWeight: getFontWeight(page),
+                }}
               >
+                {/* className={getNavClassName(page)} */}
                 {page}
               </Button>
             ))}

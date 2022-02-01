@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
@@ -12,16 +13,16 @@ import { handleLogUser } from '../store/actions/authedUser'
 
 const Login = (props) => {
   const { users, dispatch } = props
+  const navigate = useNavigate()
   const [user, setUser] = useState('')
 
   const handleChange = (event) => {
-    // console.log(event.target.value)
-    // console.log(users.find((u) => u.id === event.target.value))
     setUser(event.target.value)
   }
 
   const handleLogin = () => {
     dispatch(handleLogUser(user))
+    navigate('/')
   }
 
   return (

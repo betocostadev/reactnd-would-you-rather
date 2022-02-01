@@ -30,3 +30,12 @@ body {
 .avatar-selector-img {
   vertical-align: middle;
 }
+
+.nav-active {
+  color: white;
+  font-weight: 700;
+}
+
+.nav-inactive {
+  color: white;
+}

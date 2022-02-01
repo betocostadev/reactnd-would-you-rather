@@ -5,6 +5,7 @@ import App from './App'
 // import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
 import reducer from './store/reducers'
 import middleware from './store/middleware'
 
@@ -13,7 +14,9 @@ const store = createStore(reducer, middleware)
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
