@@ -2,6 +2,8 @@ import { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading-bar'
 import { handleInitialData } from './store/actions/shared'
+import Loading from './components/Loading'
+import Nav from './components/Nav'
 import Home from './pages/Home'
 import Login from './pages/Login'
 
@@ -15,15 +17,9 @@ const App = (props) => {
   return (
     <Fragment>
       <LoadingBar />
-      <h1 className='header'>Would you rather?</h1>
+      <Nav />
       <div className='container'>
-        {loading ? (
-          <h2>Loading...</h2>
-        ) : !loading && authedUser ? (
-          <Home />
-        ) : (
-          <Login />
-        )}
+        {loading ? <Loading /> : !loading && authedUser ? <Home /> : <Login />}
       </div>
     </Fragment>
   )

@@ -1,8 +1,5 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
-import char1 from '../assets/avatars/char1.svg'
-import char2 from '../assets/avatars/char2.svg'
-import char3 from '../assets/avatars/char3.svg'
 
 import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
@@ -10,6 +7,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import Button from '@mui/material/Button'
+
 import { handleLogUser } from '../store/actions/authedUser'
 
 const Login = (props) => {
@@ -29,10 +27,15 @@ const Login = (props) => {
   return (
     <div>
       <h2>Login</h2>
+      <p>Please select your user to start using this App</p>
       {users.length > 0 && (
         <div>
           <Box sx={{ minWidth: 120 }}>
-            <FormControl fullWidth>
+            <FormControl
+              margin='dense'
+              size='medium'
+              className='login-selector'
+            >
               <InputLabel id='select-user-label'>Select User</InputLabel>
               <Select
                 labelId='select-user-label'
@@ -44,13 +47,8 @@ const Login = (props) => {
                 {users.map((u) => (
                   <MenuItem key={u.id} value={u.id}>
                     <img
-                      src={
-                        u.name.includes('Sarah')
-                          ? char1
-                          : u.name.includes('Tyler')
-                          ? char2
-                          : char3
-                      }
+                      className='avatar-selector-img'
+                      src={u.avatar}
                       alt={u.name}
                     />
                     {u.name}

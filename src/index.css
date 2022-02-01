@@ -22,3 +22,11 @@ body {
   color: white;
   background-color: #4471ef;
 }
+
+.login-selector {
+  width: 80%;
+  margin: 1rem auto;
+}
+.avatar-selector-img {
+  vertical-align: middle;
+}
