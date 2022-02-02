@@ -42,7 +42,7 @@ const Home = (props) => {
             ))}
           </ul>
         ) : tab === 0 && unansweredQuestions.length < 1 ? (
-          <p>Sorry, no questions without answer at the moment</p>
+          <p>Wow, you answered all questions!</p>
         ) : tab === 1 && answeredQuestions.length > 0 ? (
           <ul className='questions-list'>
             {answeredQuestions.map((id) => (
@@ -52,7 +52,7 @@ const Home = (props) => {
             ))}
           </ul>
         ) : (
-          <p>Sorry, no answered questions at this moment.</p>
+          <p>You haven't answered any question, start now!</p>
         )}
       </Box>
     </div>
@@ -64,16 +64,16 @@ function mapStateToProps({ authedUser, questions }) {
     .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
     .filter(
       (q) =>
-        questions[q].optionOne.votes.length ||
-        questions[q].optionTwo.votes.length
+        questions[q].optionOne.votes.find((u) => u === authedUser) ||
+        questions[q].optionTwo.votes.find((u) => u === authedUser)
     )
 
   const unansweredQuestions = Object.keys(questions)
     .sort((a, b) => questions[b].timestamp - questions[a].timestamp)
     .filter(
       (q) =>
-        !questions[q].optionOne.votes.length &&
-        !questions[q].optionTwo.votes.length
+        !questions[q].optionOne.votes.find((u) => u === authedUser) &&
+        !questions[q].optionTwo.votes.find((u) => u === authedUser)
     )
 
   return {

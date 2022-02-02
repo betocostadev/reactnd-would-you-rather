@@ -41,7 +41,28 @@ body {
 }
 
 .card-image {
-  background: blueviolet;
+  background: #9c27b0;
+}
+
+.card-results {
+  display: flex;
+  flex-direction: column;
+  margin: 0.25rem 1rem;
+}
+
+.card-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.result-slider {
+  margin: 1rem auto;
+  padding: 1rem;
+  width: 60%;
 }
 
 .questions-list {

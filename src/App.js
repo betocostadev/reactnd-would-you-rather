@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import LeaderBoard from './pages/LeaderBoard'
 import NewQuestion from './pages/NewQuestion'
+import QuestionPage from './components/QuestionPage'
 
 const App = (props) => {
   const { dispatch, loading, authedUser } = props
@@ -36,6 +37,7 @@ const App = (props) => {
             <Route path='/login' element={<Login />} />
             <Route path='/leader-board' element={<LeaderBoard />} />
             <Route path='/new-question' element={<NewQuestion />} />
+            <Route path='/question/:id' element={<QuestionPage />} />
           </Routes>
         )}
       </div>

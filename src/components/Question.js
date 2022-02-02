@@ -1,3 +1,5 @@
+import { connect } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
@@ -5,36 +7,63 @@ import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions } from '@mui/material'
 
 const Question = (props) => {
+  const { question, author } = props
+  const navigate = useNavigate()
+  console.log(question)
+  console.log(author)
+
+  const toQuestion = (e, id) => {
+    e.preventDefault()
+    navigate(`/question/${id}`)
+  }
+
   return (
-    <Card sx={{ maxWidth: 345, margin: '1rem auto' }}>
+    <Card sx={{ maxWidth: 345, margin: '0.75rem auto' }}>
       <CardActionArea>
         <CardMedia
           className='card-image'
           component='img'
-          height='140'
-          image='../assets/avatars/char1.svg'
+          height='120'
+          image={author.avatarURL}
           alt='username'
         />
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>
-            Sarah Edo asks
+            {author.name} asks
           </Typography>
           <Typography variant='h6' color='text.secondary'>
             Would you rather?
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            ...{question.optionOne.text.substring(0, 25)}...
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size='small' color='primary'>
+        <Button
+          size='small'
+          color='primary'
+          onClick={(e) => toQuestion(e, question.id)}
+        >
           View Pool
         </Button>
       </CardActions>
     </Card>
   )
 }
+function mapStateToProps({ authedUser, users, questions }, { id }) {
+  const question = questions[id]
+  const author = users[question.author]
+  // const parentTweet = tweet ? tweets[tweet.replyingTo] : null
 
-export default Question
+  return {
+    authedUser,
+    question,
+    author,
+    // tweet: tweet
+    //   ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
+    //   : null,
+  }
+}
+
+export default connect(mapStateToProps)(Question)
