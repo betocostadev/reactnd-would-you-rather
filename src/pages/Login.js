@@ -13,8 +13,8 @@ import { handleLogUser } from '../store/actions/authedUser'
 
 const Login = (props) => {
   const { users, dispatch } = props
-  const navigate = useNavigate()
   const [user, setUser] = useState('')
+  const navigate = useNavigate()
 
   const handleChange = (event) => {
     setUser(event.target.value)

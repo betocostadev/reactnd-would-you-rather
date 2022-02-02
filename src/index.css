@@ -39,3 +39,11 @@ body {
 .nav-inactive {
   color: white;
 }
+
+.card-image {
+  background: blueviolet;
+}
+
+.questions-list {
+  list-style-type: none;
+}
