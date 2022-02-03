@@ -21,7 +21,6 @@ const Nav = (props) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const location = useLocation()
   const navigate = useNavigate()
-  console.log(location)
 
   const handleOpenNavMenu = (event) => {
     // console.log(event)

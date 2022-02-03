@@ -15,7 +15,6 @@ const Home = (props) => {
   const [tab, setTab] = useState(0)
 
   const handleChange = (event, newValue) => {
-    console.log(newValue)
     setTab(newValue)
   }
 

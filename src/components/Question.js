@@ -9,8 +9,6 @@ import { Button, CardActionArea, CardActions } from '@mui/material'
 const Question = (props) => {
   const { question, author } = props
   const navigate = useNavigate()
-  console.log(question)
-  console.log(author)
 
   const toQuestion = (e, id) => {
     e.preventDefault()

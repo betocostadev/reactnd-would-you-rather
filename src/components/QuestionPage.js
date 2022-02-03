@@ -14,6 +14,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import LinearProgress from '@mui/material/LinearProgress'
+import Chip from '@mui/material/Chip'
 
 const QuestionPage = (props) => {
   const { id } = useParams()
@@ -53,21 +54,19 @@ const QuestionPage = (props) => {
     console.log('handleVote')
   }
 
-  const optionOneResult = (value) => {
+  const optionOneResult = () => {
     const result =
-      totalVotes / question.optionOne.votes.length >= 1
+      question.optionOne.votes.length / totalVotes >= 1
         ? 100
-        : (totalVotes / question.optionOne.votes.length) * 100
-    console.log('result one', result)
-    return result
+        : (question.optionOne.votes.length / totalVotes) * 100
+    return result >= 100 ? result : result.toFixed(1)
   }
-  const optionTwoResult = (value) => {
+  const optionTwoResult = () => {
     const result =
-      totalVotes / question.optionTwo.votes.length >= 1
+      question.optionTwo.votes.length / totalVotes >= 1
         ? 100
-        : (totalVotes / question.optionTwo.votes.length) * 100
-    console.log('result two', result)
-    return result
+        : (question.optionTwo.votes.length / totalVotes) * 100
+    return result >= 100 ? result : result.toFixed(1)
   }
 
   const LinearProgressWithLabel = (props) => {
@@ -136,9 +135,22 @@ const QuestionPage = (props) => {
           </Button>
         </CardActions>
       ) : (
-        <CardActionArea>
-          <div className='card-results'>
-            <div className='card-result'>
+        <div className='card-results'>
+          <CardActionArea>
+            <div
+              className={
+                question.optionOne.votes.includes(authedUser)
+                  ? 'card-result card-result-active'
+                  : 'card-result'
+              }
+            >
+              {question.optionOne.votes.includes(authedUser) && (
+                <Chip
+                  className='result-chip'
+                  label='Your vote'
+                  color='success'
+                />
+              )}
               <Typography variant='h6' color='text.secondary'>
                 Would you rather {question.optionOne.text}
               </Typography>
@@ -147,8 +159,26 @@ const QuestionPage = (props) => {
                   <LinearProgressWithLabel value={q1percent} />
                 </Box>
               </div>
+              <Typography variant='p' color='text.secondary'>
+                {question.optionOne.votes.length} out of {totalVotes} votes
+              </Typography>
             </div>
-            <div className='card-result'>
+          </CardActionArea>
+          <CardActionArea>
+            <div
+              className={
+                question.optionTwo.votes.includes(authedUser)
+                  ? 'card-result card-result-active'
+                  : 'card-result'
+              }
+            >
+              {question.optionTwo.votes.includes(authedUser) && (
+                <Chip
+                  className='result-chip'
+                  label='Your vote'
+                  color='success'
+                />
+              )}
               <Typography variant='h6' color='text.secondary'>
                 Would you rather {question.optionTwo.text}
               </Typography>
@@ -157,9 +187,12 @@ const QuestionPage = (props) => {
                   <LinearProgressWithLabel value={q2percent} />
                 </Box>
               </div>
+              <Typography variant='p' color='text.secondary'>
+                {question.optionTwo.votes.length} out of {totalVotes} votes
+              </Typography>
             </div>
-          </div>
-        </CardActionArea>
+          </CardActionArea>
+        </div>
       )}
     </Card>
   )
