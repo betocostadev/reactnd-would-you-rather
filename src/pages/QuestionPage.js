@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { handleAddVote } from '../store/actions/questions'
 
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
@@ -15,11 +16,12 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import LinearProgress from '@mui/material/LinearProgress'
 import Chip from '@mui/material/Chip'
+import Notify from '../components/Notify'
 
 const QuestionPage = (props) => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { authedUser, questions, users } = props
+  const { authedUser, questions, users, dispatch } = props
   const question = questions[id]
   const author = users[question.author]
   const answered =
@@ -31,9 +33,12 @@ const QuestionPage = (props) => {
   const totalVotes =
     question.optionOne.votes.length + question.optionTwo.votes.length
 
-  const [poolVal, setPoolVal] = useState('a')
+  const [poolVal, setPoolVal] = useState('optionOne')
   const [q1percent, setq1Percent] = useState(0)
   const [q2percent, setq2Percent] = useState(0)
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [snackMessage, setSnackMessage] = useState('')
+  const [snackType, setSnackType] = useState('success')
 
   useEffect(() => {
     if (!authedUser) navigate('/login')
@@ -49,9 +54,19 @@ const QuestionPage = (props) => {
     setPoolVal(e.target.value)
   }
 
-  const handleVote = () => {
-    console.log(poolVal)
-    console.log('handleVote')
+  const handleVote = async () => {
+    try {
+      await dispatch(
+        handleAddVote({ authedUser, qid: question.id, answer: poolVal })
+      )
+      setSnackMessage('Vote added Successfully!')
+      setSnackType('success')
+      setSnackOpen(true)
+    } catch (error) {
+      setSnackMessage('Error adding vote, try again later.')
+      setSnackType('error')
+      setSnackOpen(true)
+    }
   }
 
   const optionOneResult = () => {
@@ -61,12 +76,19 @@ const QuestionPage = (props) => {
         : (question.optionOne.votes.length / totalVotes) * 100
     return result >= 100 ? result : result.toFixed(1)
   }
+
   const optionTwoResult = () => {
     const result =
       question.optionTwo.votes.length / totalVotes >= 1
         ? 100
         : (question.optionTwo.votes.length / totalVotes) * 100
     return result >= 100 ? result : result.toFixed(1)
+  }
+
+  const handleClose = () => {
+    setSnackOpen(false)
+    setSnackMessage('')
+    setSnackType('success')
   }
 
   const LinearProgressWithLabel = (props) => {
@@ -108,18 +130,18 @@ const QuestionPage = (props) => {
             <FormLabel id='radio-buttons-group-label'></FormLabel>
             <RadioGroup
               aria-labelledby='radio-buttons-group-label'
-              defaultValue='a'
+              defaultValue='optionOne'
               value={poolVal}
               onChange={handleChange}
               name='radio-buttons-group'
             >
               <FormControlLabel
-                value='a'
+                value='optionOne'
                 control={<Radio />}
                 label={question.optionOne.text}
               />
               <FormControlLabel
-                value='b'
+                value='optionTwo'
                 control={<Radio />}
                 label={question.optionTwo.text}
               />
@@ -156,7 +178,7 @@ const QuestionPage = (props) => {
               </Typography>
               <div className='result-slider'>
                 <Box sx={{ width: '100%' }}>
-                  <LinearProgressWithLabel value={q1percent} />
+                  <LinearProgressWithLabel value={Number(q1percent)} />
                 </Box>
               </div>
               <Typography variant='p' color='text.secondary'>
@@ -184,7 +206,7 @@ const QuestionPage = (props) => {
               </Typography>
               <div className='result-slider'>
                 <Box sx={{ width: '100%' }}>
-                  <LinearProgressWithLabel value={q2percent} />
+                  <LinearProgressWithLabel value={Number(q2percent)} />
                 </Box>
               </div>
               <Typography variant='p' color='text.secondary'>
@@ -194,6 +216,12 @@ const QuestionPage = (props) => {
           </CardActionArea>
         </div>
       )}
+      <Notify
+        open={snackOpen}
+        message={snackMessage}
+        handleClose={handleClose}
+        type={snackType}
+      />
     </Card>
   )
 }
@@ -202,9 +230,6 @@ function mapStateToProps({ authedUser, users, questions }) {
     authedUser,
     questions,
     users,
-    // tweet: tweet
-    //   ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
-    //   : null,
   }
 }
 

@@ -83,3 +83,10 @@ body {
 .questions-list {
   list-style-type: none;
 }
+
+.new-question-form-fields {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin-left: 1rem;
+}

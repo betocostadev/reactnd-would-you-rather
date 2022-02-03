@@ -23,13 +23,11 @@ const Nav = (props) => {
   const navigate = useNavigate()
 
   const handleOpenNavMenu = (event) => {
-    // console.log(event)
     setAnchorElNav(event.currentTarget)
   }
 
   const handleCloseNavMenu = (event) => {
     setAnchorElNav(null)
-    // console.log(event.target.value)
   }
 
   const handleNavigate = (page) => {

@@ -52,15 +52,11 @@ const Question = (props) => {
 function mapStateToProps({ authedUser, users, questions }, { id }) {
   const question = questions[id]
   const author = users[question.author]
-  // const parentTweet = tweet ? tweets[tweet.replyingTo] : null
 
   return {
     authedUser,
     question,
     author,
-    // tweet: tweet
-    //   ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
-    //   : null,
   }
 }
 

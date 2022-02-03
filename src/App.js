@@ -10,7 +10,7 @@ import Login from './pages/Login'
 import Home from './pages/Home'
 import LeaderBoard from './pages/LeaderBoard'
 import NewQuestion from './pages/NewQuestion'
-import QuestionPage from './components/QuestionPage'
+import QuestionPage from './pages/QuestionPage'
 
 const App = (props) => {
   const { dispatch, loading, authedUser } = props
@@ -22,7 +22,7 @@ const App = (props) => {
       if (!authedUser) navigate('/login')
     }
     fetchData()
-  }, [])
+  }, [authedUser, dispatch, navigate])
 
   return (
     <Fragment>
