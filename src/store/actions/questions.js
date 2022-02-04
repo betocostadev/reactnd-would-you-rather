@@ -26,12 +26,15 @@ export function addVote({ authedUser, qid, answer }) {
 export function handleAddVote(info) {
   return async (dispatch) => {
     try {
+      dispatch(showLoading())
       await saveQuestionAnswer(info)
       dispatch(addVote(info))
       dispatch(addUserQuestionVote(info))
     } catch (error) {
       console.warn('error in handleAddVote: ', error)
       throw new Error('There was an error.')
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }

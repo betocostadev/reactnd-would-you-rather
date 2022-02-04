@@ -1,3 +1,5 @@
+import { showLoading, hideLoading } from 'react-redux-loading-bar'
+
 export const SET_AUTHED_USER = 'SET_AUTHED_USER'
 
 export function setAuthedUser(id) {
@@ -10,11 +12,14 @@ export function setAuthedUser(id) {
 export function handleLogUser(id) {
   return async (dispatch) => {
     try {
-      dispatch(setAuthedUser(id))
+      dispatch(showLoading())
+      await dispatch(setAuthedUser(id))
     } catch (error) {
       console.warn('error in user selection: ', error)
       dispatch(setAuthedUser(null))
-      alert('There was an error.')
+      throw new Error('Error login in')
+    } finally {
+      dispatch(hideLoading())
     }
   }
 }
