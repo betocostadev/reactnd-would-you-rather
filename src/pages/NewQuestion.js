@@ -9,8 +9,7 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import NewQuestionForm from '../components/NewQuestionForm'
 
 const NewQuestion = (props) => {
   const { authedUser, dispatch } = props
@@ -54,7 +53,12 @@ const NewQuestion = (props) => {
       setSnackType('success')
       setSnackOpen(true)
 
-      navigate('/')
+      setOptionOne('')
+      setOptionTwo('')
+
+      setTimeout(() => {
+        navigate('/')
+      }, 750)
     } catch (error) {
       setSnackMessage('Error adding your question, try again later.')
       setSnackType('error')
@@ -94,50 +98,13 @@ const NewQuestion = (props) => {
               Would you rather...
             </Typography>
           </div>
-          <Box
-            component='form'
-            className='new-question-form-fields'
-            sx={{
-              '& .MuiTextField-root': {
-                m: 1,
-              },
-            }}
-            noValidate
-            autoComplete='off'
-          >
-            <TextField
-              fullWidth
-              id='optionOne'
-              label='Option One'
-              value={optionOne}
-              onChange={handleOptionOne}
-            />
-            <Typography
-              textAlign={'center'}
-              mt={2}
-              mb={1}
-              variant='h5'
-              component='h5'
-            >
-              OR
-            </Typography>
-            <TextField
-              fullWidth
-              id='optionTwo'
-              label='Option Two'
-              value={optionTwo}
-              onChange={handleOptionTwo}
-            />
-
-            <Button
-              sx={{ margin: '2rem 1rem' }}
-              disabled={optionOne.length < 5 || optionTwo.length < 5}
-              variant='contained'
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </Box>
+          <NewQuestionForm
+            optionOne={optionOne}
+            optionTwo={optionTwo}
+            handleOptionOne={handleOptionOne}
+            handleOptionTwo={handleOptionTwo}
+            handleSubmit={handleSubmit}
+          />
         </Paper>
       </Box>
       <Notify

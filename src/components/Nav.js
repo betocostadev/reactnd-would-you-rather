@@ -36,10 +36,10 @@ const Nav = (props) => {
         navigate('/')
         break
       case 'Leader Board':
-        navigate('/leader-board')
+        navigate('/leaderboard')
         break
       case 'New Question':
-        navigate('/new-question')
+        navigate('/add')
         break
       default:
         break
@@ -51,8 +51,8 @@ const Nav = (props) => {
     const { pathname } = location
     if (
       (page === 'Home' && pathname === '/') ||
-      (page === 'Leader Board' && pathname === '/leader-board') ||
-      (page === 'New Question' && pathname === '/new-question')
+      (page === 'Leader Board' && pathname === '/leaderboard') ||
+      (page === 'New Question' && pathname === '/add')
     ) {
       return 700
     } else return 400

@@ -3,20 +3,14 @@ import { connect } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { handleAddVote } from '../store/actions/questions'
 
-import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
-import { Button, CardActionArea, CardActions } from '@mui/material'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormControl from '@mui/material/FormControl'
-import FormLabel from '@mui/material/FormLabel'
-import LinearProgress from '@mui/material/LinearProgress'
-import Chip from '@mui/material/Chip'
+
 import Notify from '../components/Notify'
+import CardPoolOptions from '../components/CardPoolOptions'
+import CardPoolResults from '../components/CardPoolResults'
 
 const QuestionPage = (props) => {
   const { id } = useParams()
@@ -91,21 +85,6 @@ const QuestionPage = (props) => {
     setSnackType('success')
   }
 
-  const LinearProgressWithLabel = (props) => {
-    return (
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-        <Box sx={{ width: '100%', mr: 1 }}>
-          <LinearProgress variant='determinate' {...props} />
-        </Box>
-        <Box sx={{ minWidth: 35 }}>
-          <Typography variant='body2' color='text.secondary'>{`${Math.round(
-            props.value
-          )}%`}</Typography>
-        </Box>
-      </Box>
-    )
-  }
-
   return (
     <Card sx={{ maxWidth: 345, margin: '0.75rem auto' }}>
       <CardMedia
@@ -125,96 +104,21 @@ const QuestionPage = (props) => {
       </CardContent>
 
       {!answered ? (
-        <CardActions style={{ display: 'flex', flexDirection: 'column' }}>
-          <FormControl>
-            <FormLabel id='radio-buttons-group-label'></FormLabel>
-            <RadioGroup
-              aria-labelledby='radio-buttons-group-label'
-              defaultValue='optionOne'
-              value={poolVal}
-              onChange={handleChange}
-              name='radio-buttons-group'
-            >
-              <FormControlLabel
-                value='optionOne'
-                control={<Radio />}
-                label={question.optionOne.text}
-              />
-              <FormControlLabel
-                value='optionTwo'
-                control={<Radio />}
-                label={question.optionTwo.text}
-              />
-            </RadioGroup>
-          </FormControl>
-          <Button
-            size='large'
-            variant='contained'
-            color='secondary'
-            onClick={handleVote}
-          >
-            Submit
-          </Button>
-        </CardActions>
+        <CardPoolOptions
+          poolVal={poolVal}
+          optionOne={question.optionOne.text}
+          optionTwo={question.optionTwo.text}
+          handleChange={handleChange}
+          handleVote={handleVote}
+        />
       ) : (
-        <div className='card-results'>
-          <CardActionArea>
-            <div
-              className={
-                question.optionOne.votes.includes(authedUser)
-                  ? 'card-result card-result-active'
-                  : 'card-result'
-              }
-            >
-              {question.optionOne.votes.includes(authedUser) && (
-                <Chip
-                  className='result-chip'
-                  label='Your vote'
-                  color='success'
-                />
-              )}
-              <Typography variant='h6' color='text.secondary'>
-                Would you rather {question.optionOne.text}
-              </Typography>
-              <div className='result-slider'>
-                <Box sx={{ width: '100%' }}>
-                  <LinearProgressWithLabel value={Number(q1percent)} />
-                </Box>
-              </div>
-              <Typography variant='p' color='text.secondary'>
-                {question.optionOne.votes.length} out of {totalVotes} votes
-              </Typography>
-            </div>
-          </CardActionArea>
-          <CardActionArea>
-            <div
-              className={
-                question.optionTwo.votes.includes(authedUser)
-                  ? 'card-result card-result-active'
-                  : 'card-result'
-              }
-            >
-              {question.optionTwo.votes.includes(authedUser) && (
-                <Chip
-                  className='result-chip'
-                  label='Your vote'
-                  color='success'
-                />
-              )}
-              <Typography variant='h6' color='text.secondary'>
-                Would you rather {question.optionTwo.text}
-              </Typography>
-              <div className='result-slider'>
-                <Box sx={{ width: '100%' }}>
-                  <LinearProgressWithLabel value={Number(q2percent)} />
-                </Box>
-              </div>
-              <Typography variant='p' color='text.secondary'>
-                {question.optionTwo.votes.length} out of {totalVotes} votes
-              </Typography>
-            </div>
-          </CardActionArea>
-        </div>
+        <CardPoolResults
+          optionOne={question.optionOne}
+          optionTwo={question.optionTwo}
+          q1percent={q1percent}
+          q2percent={q2percent}
+          totalVotes={totalVotes}
+        />
       )}
       <Notify
         open={snackOpen}

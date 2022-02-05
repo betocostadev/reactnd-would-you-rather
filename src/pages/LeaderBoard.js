@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import LeaderInfo from '../components/LeaderInfo'
 
 const LeaderBoard = (props) => {
   const { authedUser, users } = props
@@ -13,7 +14,11 @@ const LeaderBoard = (props) => {
 
   return (
     <div>
-      <h2>LeaderBoard</h2>
+      <ul>
+        {users.map((u) => (
+          <LeaderInfo key={u.id} leader={u} />
+        ))}
+      </ul>
     </div>
   )
 }

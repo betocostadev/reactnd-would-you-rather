@@ -17,7 +17,7 @@ const Question = (props) => {
 
   return (
     <Card sx={{ maxWidth: 345, margin: '0.75rem auto' }}>
-      <CardActionArea>
+      <CardActionArea onClick={(e) => toQuestion(e, question.id)}>
         <CardMedia
           className='card-image'
           component='img'

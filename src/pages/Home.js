@@ -41,7 +41,9 @@ const Home = (props) => {
             ))}
           </ul>
         ) : tab === 0 && unansweredQuestions.length < 1 ? (
-          <p>Wow, you answered all questions!</p>
+          <p style={{ textAlign: 'center' }}>
+            Wow, you answered all questions!
+          </p>
         ) : tab === 1 && answeredQuestions.length > 0 ? (
           <ul className='questions-list'>
             {answeredQuestions.map((id) => (
@@ -51,7 +53,9 @@ const Home = (props) => {
             ))}
           </ul>
         ) : (
-          <p>You haven't answered any question, start now!</p>
+          <p style={{ textAlign: 'center' }}>
+            You haven't answered any question, start now!
+          </p>
         )}
       </Box>
     </div>
