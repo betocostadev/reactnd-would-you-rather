@@ -13,6 +13,7 @@ import NewQuestion from './pages/NewQuestion'
 import QuestionPage from './pages/QuestionPage'
 import { handleToggleNotify } from './store/actions/notify'
 import Notify from './components/Notify'
+import NotFound from './pages/Notfound'
 
 const App = (props) => {
   const { dispatch, loading, authedUser, notify } = props
@@ -56,6 +57,7 @@ const App = (props) => {
             <Route path='/leaderboard' element={<LeaderBoard />} />
             <Route path='/add' element={<NewQuestion />} />
             <Route path='/question/:id' element={<QuestionPage />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         )}
       </div>

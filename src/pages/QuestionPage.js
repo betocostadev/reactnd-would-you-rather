@@ -15,16 +15,18 @@ const QuestionPage = ({ authedUser, questions, users, dispatch }) => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const question = questions[id]
-  const author = users[question.author]
-  const answered =
-    question.optionOne.votes.find((u) => u === authedUser) ||
-    question.optionTwo.votes.find((u) => u === authedUser)
+  const question = questions ? questions[id] : null
+  const author = question ? users[question.author] : null
+  const answered = question
+    ? question.optionOne.votes.find((u) => u === authedUser) ||
+      question.optionTwo.votes.find((u) => u === authedUser)
       ? true
       : false
+    : null
 
-  const totalVotes =
-    question.optionOne.votes.length + question.optionTwo.votes.length
+  const totalVotes = question
+    ? question.optionOne.votes.length + question.optionTwo.votes.length
+    : 0
 
   const [poolVal, setPoolVal] = useState('optionOne')
   const [q1percent, setq1Percent] = useState(0)
@@ -68,6 +70,12 @@ const QuestionPage = ({ authedUser, questions, users, dispatch }) => {
         ? 100
         : (question.optionTwo.votes.length / totalVotes) * 100
     return result >= 100 ? result : result.toFixed(1)
+  }
+
+  if (!question) {
+    return (
+      <h3>Ops... Looks like this question doesn't exist, or it was deleted</h3>
+    )
   }
 
   return (
