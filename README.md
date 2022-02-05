@@ -4,6 +4,36 @@
 
 This project was created as the last project in React Nanodegree by Udacity.
 
+Files in the [utils folder](./src/utils/) were provided by Udacity, everything else was made by me.
+
+## Description
+
+This is a simple App focused on managing the application state using Redux and avoid doing it using props and component state.
+
+Would You Rather is an App where you can vote for users questions, and create your own questions to be voted by others.
+
+### Functionality
+
+**Users can**
+
+- Log in (there are 3 users to choose from, there is no back-end, and no login)
+- See Answered Questions
+- See Unanswered Questions and vote
+- Create your own questions
+- Check the leader board
+
+### Related material
+
+[reactnd-chirper-app](https://github.com/betocostadev/reactnd-chirper-app) - Udacity's React project focused on Redux state management
+
+[reactnd-redux-todos-goals](reactnd-redux-todos-goals) - Udacity's lessons related to Redux, React-Redux, and middlewares.
+
+[reactnd-todos-goals](reactnd-todos-goals) - Udacity's lessons related to Redux, and middlewares, creating a store from scratch.
+
+[udc-reactnd-fundamentals](udc-reactnd-fundamentals) - Udacity's lessos covering React (no store)
+
+---
+
 ## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
