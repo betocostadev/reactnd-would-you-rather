@@ -6,8 +6,7 @@ import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 import { Button, CardActionArea, CardActions } from '@mui/material'
 
-const Question = (props) => {
-  const { question, author } = props
+const Question = ({ question, author }) => {
   const navigate = useNavigate()
 
   const toQuestion = (e, id) => {

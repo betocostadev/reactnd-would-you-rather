@@ -7,8 +7,7 @@ import CardContent from '@mui/material/CardContent'
 import Avatar from '@mui/material/Avatar'
 import Stack from '@mui/material/Stack'
 
-const LeaderInfo = (props) => {
-  const { leader } = props
+const LeaderInfo = ({ leader }) => {
   return (
     <Box
       sx={{

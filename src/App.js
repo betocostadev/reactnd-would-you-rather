@@ -11,9 +11,11 @@ import Home from './pages/Home'
 import LeaderBoard from './pages/LeaderBoard'
 import NewQuestion from './pages/NewQuestion'
 import QuestionPage from './pages/QuestionPage'
+import { handleToggleNotify } from './store/actions/notify'
+import Notify from './components/Notify'
 
 const App = (props) => {
-  const { dispatch, loading, authedUser } = props
+  const { dispatch, loading, authedUser, notify } = props
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,9 +26,25 @@ const App = (props) => {
     fetchData()
   }, [authedUser, dispatch, navigate])
 
+  const hideNotify = () => {
+    dispatch(
+      handleToggleNotify({
+        open: false,
+        severity: 'info',
+        message: '',
+      })
+    )
+  }
+
   return (
     <Fragment>
       <LoadingBar />
+      <Notify
+        open={notify.open}
+        severity={notify.severity}
+        message={notify.message}
+        handleClose={hideNotify}
+      />
       <Nav />
       <div className='container'>
         {loading ? (
@@ -45,10 +63,11 @@ const App = (props) => {
   )
 }
 
-function mapStateToProps({ authedUser, questions }) {
+function mapStateToProps({ authedUser, questions, notify }) {
   return {
     loading: !Object.keys(questions).length,
     authedUser,
+    notify,
   }
 }
 

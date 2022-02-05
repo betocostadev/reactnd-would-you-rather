@@ -8,14 +8,13 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import Typography from '@mui/material/Typography'
 
-import Notify from '../components/Notify'
 import CardPoolOptions from '../components/CardPoolOptions'
 import CardPoolResults from '../components/CardPoolResults'
 
-const QuestionPage = (props) => {
+const QuestionPage = ({ authedUser, questions, users, dispatch }) => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { authedUser, questions, users, dispatch } = props
+
   const question = questions[id]
   const author = users[question.author]
   const answered =
@@ -30,9 +29,6 @@ const QuestionPage = (props) => {
   const [poolVal, setPoolVal] = useState('optionOne')
   const [q1percent, setq1Percent] = useState(0)
   const [q2percent, setq2Percent] = useState(0)
-  const [snackOpen, setSnackOpen] = useState(false)
-  const [snackMessage, setSnackMessage] = useState('')
-  const [snackType, setSnackType] = useState('success')
 
   useEffect(() => {
     if (!authedUser) navigate('/login')
@@ -53,13 +49,8 @@ const QuestionPage = (props) => {
       await dispatch(
         handleAddVote({ authedUser, qid: question.id, answer: poolVal })
       )
-      setSnackMessage('Vote added Successfully!')
-      setSnackType('success')
-      setSnackOpen(true)
     } catch (error) {
-      setSnackMessage('Error adding vote, try again later.')
-      setSnackType('error')
-      setSnackOpen(true)
+      console.log(error)
     }
   }
 
@@ -77,12 +68,6 @@ const QuestionPage = (props) => {
         ? 100
         : (question.optionTwo.votes.length / totalVotes) * 100
     return result >= 100 ? result : result.toFixed(1)
-  }
-
-  const handleClose = () => {
-    setSnackOpen(false)
-    setSnackMessage('')
-    setSnackType('success')
   }
 
   return (
@@ -120,12 +105,6 @@ const QuestionPage = (props) => {
           totalVotes={totalVotes}
         />
       )}
-      <Notify
-        open={snackOpen}
-        message={snackMessage}
-        handleClose={handleClose}
-        type={snackType}
-      />
     </Card>
   )
 }

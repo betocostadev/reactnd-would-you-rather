@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import LeaderInfo from '../components/LeaderInfo'
 
-const LeaderBoard = (props) => {
-  const { authedUser, users } = props
-  console.log(users)
+const LeaderBoard = ({ authedUser, users }) => {
   const navigate = useNavigate()
 
   useEffect(() => {

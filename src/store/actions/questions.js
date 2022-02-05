@@ -2,6 +2,7 @@ import { saveQuestion } from '../../utils/api'
 import { saveQuestionAnswer } from '../../utils/api'
 import { addUserQuestion, addUserQuestionVote } from './users'
 import { showLoading, hideLoading } from 'react-redux-loading-bar'
+import { handleToggleNotify } from './notify'
 
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_VOTE = 'ADD_VOTE'
@@ -30,8 +31,22 @@ export function handleAddVote(info) {
       await saveQuestionAnswer(info)
       dispatch(addVote(info))
       dispatch(addUserQuestionVote(info))
+      dispatch(
+        handleToggleNotify({
+          open: true,
+          severity: 'success',
+          message: 'Vote added Successfully!',
+        })
+      )
     } catch (error) {
       console.warn('error in handleAddVote: ', error)
+      dispatch(
+        handleToggleNotify({
+          open: true,
+          severity: 'error',
+          message: 'Error adding your vote, try again.',
+        })
+      )
       throw new Error('There was an error.')
     } finally {
       dispatch(hideLoading())
@@ -60,8 +75,22 @@ export function handleAddNewQuestion(info) {
 
       dispatch(addNewQuestion(question))
       dispatch(addUserQuestion(question))
+      dispatch(
+        handleToggleNotify({
+          open: true,
+          severity: 'success',
+          message: 'Question added Successfully!',
+        })
+      )
     } catch (error) {
       console.warn('error in handleAddNewQuestion: ', error)
+      dispatch(
+        handleToggleNotify({
+          open: true,
+          severity: 'error',
+          message: 'Error adding question, try again.',
+        })
+      )
       throw new Error('There was an error.')
     } finally {
       dispatch(hideLoading())

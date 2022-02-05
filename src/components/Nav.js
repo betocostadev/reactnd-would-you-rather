@@ -16,8 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 
 const pages = ['Home', 'New Question', 'Leader Board']
 
-const Nav = (props) => {
-  const { user, dispatch } = props
+const Nav = ({ user, dispatch }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -131,7 +130,6 @@ const Nav = (props) => {
                   fontWeight: getFontWeight(page),
                 }}
               >
-                {/* className={getNavClassName(page)} */}
                 {page}
               </Button>
             ))}

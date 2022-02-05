@@ -1,5 +1,7 @@
 # React Nanodegree Would You Rather?
 
+![screen](./cover.jpeg)
+
 This project was created as the last project in React Nanodegree by Udacity.
 
 ## Getting Started with Create React App

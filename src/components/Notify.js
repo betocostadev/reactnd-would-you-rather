@@ -6,19 +6,15 @@ const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant='filled' {...props} />
 })
 
-const Notify = (props) => {
+const Notify = ({ open, severity, message, handleClose }) => {
   return (
-    <Snackbar
-      open={props.open}
-      autoHideDuration={6000}
-      onClose={props.handleClose}
-    >
+    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
       <Alert
-        onClose={props.handleClose}
-        severity={props.type}
+        onClose={handleClose}
+        severity={severity || 'info'}
         sx={{ width: '100%' }}
       >
-        {props.message}
+        {message}
       </Alert>
     </Snackbar>
   )

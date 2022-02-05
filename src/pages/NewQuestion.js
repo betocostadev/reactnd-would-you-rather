@@ -3,33 +3,21 @@ import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { handleAddNewQuestion } from '../store/actions/questions'
 
-import Notify from '../components/Notify'
-
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import NewQuestionForm from '../components/NewQuestionForm'
 
-const NewQuestion = (props) => {
-  const { authedUser, dispatch } = props
+const NewQuestion = ({ authedUser, dispatch }) => {
   const navigate = useNavigate()
 
   const [optionOne, setOptionOne] = useState('')
   const [optionTwo, setOptionTwo] = useState('')
-  const [snackOpen, setSnackOpen] = useState(false)
-  const [snackMessage, setSnackMessage] = useState('')
-  const [snackType, setSnackType] = useState('success')
 
   useEffect(() => {
     if (!authedUser) navigate('/login')
   })
-
-  const handleClose = () => {
-    setSnackOpen(false)
-    setSnackMessage('')
-    setSnackType('success')
-  }
 
   const handleOptionOne = (e) => {
     setOptionOne(e.target.value)
@@ -49,20 +37,11 @@ const NewQuestion = (props) => {
         })
       )
 
-      setSnackMessage('Question added Successfully!')
-      setSnackType('success')
-      setSnackOpen(true)
-
       setOptionOne('')
       setOptionTwo('')
-
-      setTimeout(() => {
-        navigate('/')
-      }, 750)
+      navigate('/')
     } catch (error) {
-      setSnackMessage('Error adding your question, try again later.')
-      setSnackType('error')
-      setSnackOpen(true)
+      console.log(error)
     }
   }
 
@@ -107,12 +86,6 @@ const NewQuestion = (props) => {
           />
         </Paper>
       </Box>
-      <Notify
-        open={snackOpen}
-        message={snackMessage}
-        handleClose={handleClose}
-        type={snackType}
-      />
     </div>
   )
 }

@@ -7,9 +7,7 @@ import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import Question from '../components/Question'
 
-const Home = (props) => {
-  const { authedUser, answeredQuestions, unansweredQuestions } = props
-
+const Home = ({ authedUser, answeredQuestions, unansweredQuestions }) => {
   const navigate = useNavigate()
 
   const [tab, setTab] = useState(0)

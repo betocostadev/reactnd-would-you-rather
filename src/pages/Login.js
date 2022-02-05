@@ -11,8 +11,7 @@ import Button from '@mui/material/Button'
 
 import { handleLogUser } from '../store/actions/authedUser'
 
-const Login = (props) => {
-  const { users, dispatch } = props
+const Login = ({ users, dispatch }) => {
   const [user, setUser] = useState('')
   const navigate = useNavigate()
 
