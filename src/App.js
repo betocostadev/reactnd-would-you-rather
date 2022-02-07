@@ -1,7 +1,7 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading-bar'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import { handleInitialData } from './store/actions/shared'
 
 import Loading from './components/Loading'
@@ -16,25 +16,24 @@ import Notify from './components/Notify'
 import NotFound from './pages/Notfound'
 
 const App = (props) => {
-  const { dispatch, loading, authedUser, notify } = props
+  const { loading, authedUser, notify, getData, hide } = props
   const navigate = useNavigate()
+  const location = useLocation()
+  let redirectTo = useRef(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      await dispatch(handleInitialData())
-      if (!authedUser) navigate('/login')
+    getData()
+
+    if (!authedUser) {
+      if (location.pathname !== '/login' && location.pathname !== '/') {
+        redirectTo.current = location.pathname
+      }
+      navigate('/login')
     }
-    fetchData()
-  }, [authedUser, dispatch, navigate])
+  }, [authedUser, getData, navigate, location.pathname])
 
   const hideNotify = () => {
-    dispatch(
-      handleToggleNotify({
-        open: false,
-        severity: 'info',
-        message: '',
-      })
-    )
+    hide()
   }
 
   return (
@@ -53,10 +52,10 @@ const App = (props) => {
         ) : (
           <Routes>
             <Route path='/' element={<Home />} />
-            <Route path='/login' element={<Login />} />
+            <Route path='/login' element={<Login redirectTo={redirectTo} />} />
             <Route path='/leaderboard' element={<LeaderBoard />} />
             <Route path='/add' element={<NewQuestion />} />
-            <Route path='/question/:id' element={<QuestionPage />} />
+            <Route path='/questions/:id' element={<QuestionPage />} />
             <Route path='*' element={<NotFound />} />
           </Routes>
         )}
@@ -73,4 +72,18 @@ function mapStateToProps({ authedUser, questions, notify }) {
   }
 }
 
-export default connect(mapStateToProps)(App)
+function mapDispatchToProps(dispatch) {
+  return {
+    getData: async () => await dispatch(handleInitialData()),
+    hide: () =>
+      dispatch(
+        handleToggleNotify({
+          open: false,
+          severity: 'info',
+          message: '',
+        })
+      ),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

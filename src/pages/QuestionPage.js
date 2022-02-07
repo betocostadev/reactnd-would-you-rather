@@ -74,7 +74,10 @@ const QuestionPage = ({ authedUser, questions, users, dispatch }) => {
 
   if (!question) {
     return (
-      <h3>Ops... Looks like this question doesn't exist, or it was deleted</h3>
+      <div style={{ textAlign: 'center', fontSize: '1.25rem' }}>
+        <h2>Ops</h2>
+        <h4>Looks like this question doesn't exist, or it was deleted</h4>
+      </div>
     )
   }
 

@@ -11,7 +11,7 @@ import Button from '@mui/material/Button'
 
 import { handleLogUser } from '../store/actions/authedUser'
 
-const Login = ({ users, dispatch }) => {
+const Login = ({ users, dispatch, redirectTo }) => {
   const [user, setUser] = useState('')
   const navigate = useNavigate()
 
@@ -21,7 +21,9 @@ const Login = ({ users, dispatch }) => {
 
   const handleLogin = () => {
     dispatch(handleLogUser(user))
-    navigate('/')
+    if (redirectTo.current) {
+      navigate(redirectTo.current)
+    } else navigate('/')
   }
 
   return (
