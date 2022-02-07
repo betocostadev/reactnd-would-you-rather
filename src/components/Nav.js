@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { connect } from 'react-redux'
 import { handleLogUser } from '../store/actions/authedUser'
 import { useLocation, useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -16,7 +17,7 @@ import MenuItem from '@mui/material/MenuItem'
 
 const pages = ['Home', 'New Question', 'Leader Board']
 
-const Nav = ({ user, dispatch }) => {
+const Nav = ({ user, logout }) => {
   const [anchorElNav, setAnchorElNav] = useState(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -58,7 +59,7 @@ const Nav = ({ user, dispatch }) => {
   }
 
   const handleLogout = () => {
-    dispatch(handleLogUser(null))
+    logout()
   }
 
   return (
@@ -172,4 +173,16 @@ function mapStateToProps({ authedUser, users }) {
   }
 }
 
-export default connect(mapStateToProps)(Nav)
+function mapDispatchToProps(dispatch) {
+  return {
+    logout: () => dispatch(handleLogUser(null)),
+  }
+}
+
+Nav.propTypes = {
+  authedUser: PropTypes.string,
+  user: PropTypes.object,
+  logout: PropTypes.func.isRequired,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav)

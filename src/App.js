@@ -2,18 +2,19 @@ import { Fragment, useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import LoadingBar from 'react-redux-loading-bar'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import { handleInitialData } from './store/actions/shared'
 
-import Loading from './components/Loading'
-import Nav from './components/Nav'
+import NotFound from './pages/Notfound'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import LeaderBoard from './pages/LeaderBoard'
 import NewQuestion from './pages/NewQuestion'
 import QuestionPage from './pages/QuestionPage'
-import { handleToggleNotify } from './store/actions/notify'
+import Loading from './components/Loading'
+import Nav from './components/Nav'
 import Notify from './components/Notify'
-import NotFound from './pages/Notfound'
+import { handleToggleNotify } from './store/actions/notify'
 
 const App = (props) => {
   const { loading, authedUser, notify, getData, hide } = props
@@ -84,6 +85,14 @@ function mapDispatchToProps(dispatch) {
         })
       ),
   }
+}
+
+App.propTypes = {
+  loading: PropTypes.bool.isRequired,
+  authedUser: PropTypes.string,
+  notify: PropTypes.object,
+  getData: PropTypes.func.isRequired,
+  hide: PropTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

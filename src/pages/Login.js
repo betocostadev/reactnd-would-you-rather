@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Box from '@mui/material/Box'
 import InputLabel from '@mui/material/InputLabel'
@@ -22,7 +23,9 @@ const Login = ({ users, dispatch, redirectTo }) => {
   const handleLogin = () => {
     dispatch(handleLogUser(user))
     if (redirectTo.current) {
-      navigate(redirectTo.current)
+      const redirect = redirectTo.current
+      redirectTo.current = null
+      navigate(redirect)
     } else navigate('/')
   }
 
@@ -82,6 +85,10 @@ function mapStateToProps({ users }) {
       ? usersArr.map((u) => ({ id: u.id, name: u.name, avatar: u.avatarURL }))
       : [],
   }
+}
+
+Login.propTypes = {
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default connect(mapStateToProps)(Login)

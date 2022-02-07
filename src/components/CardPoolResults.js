@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { CardActionArea } from '@mui/material'
@@ -86,6 +88,17 @@ function mapStateToProps({ authedUser }) {
   return {
     authedUser,
   }
+}
+
+CardPoolResults.propTypes = {
+  optionOne: PropTypes.object.isRequired,
+  optionTwo: PropTypes.object.isRequired,
+  q1percent: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  q2percent: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    .isRequired,
+  totalVotes: PropTypes.number.isRequired,
+  authedUser: PropTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps)(CardPoolResults)

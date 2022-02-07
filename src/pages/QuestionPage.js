@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { handleAddVote } from '../store/actions/questions'
+import PropTypes from 'prop-types'
 
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -125,6 +126,12 @@ function mapStateToProps({ authedUser, users, questions }) {
     questions,
     users,
   }
+}
+
+QuestionPage.propTypes = {
+  authedUser: PropTypes.string,
+  questions: PropTypes.object,
+  users: PropTypes.object,
 }
 
 export default connect(mapStateToProps)(QuestionPage)

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { handleAddNewQuestion } from '../store/actions/questions'
+import PropTypes from 'prop-types'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -94,6 +95,10 @@ function mapStateToProps({ authedUser }) {
   return {
     authedUser,
   }
+}
+
+NewQuestion.propTypes = {
+  authedUser: PropTypes.string,
 }
 
 export default connect(mapStateToProps)(NewQuestion)

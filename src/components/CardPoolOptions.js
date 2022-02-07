@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 import { Button, CardActions } from '@mui/material'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
@@ -45,6 +47,14 @@ const CardPoolOptions = ({
       </Button>
     </CardActions>
   )
+}
+
+CardPoolOptions.propTypes = {
+  poolVal: PropTypes.string.isRequired,
+  optionOne: PropTypes.string.isRequired,
+  optionTwo: PropTypes.string.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleVote: PropTypes.func.isRequired,
 }
 
 export default CardPoolOptions

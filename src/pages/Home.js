@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 import Box from '@mui/material/Box'
 import Tabs from '@mui/material/Tabs'
@@ -82,6 +83,16 @@ function mapStateToProps({ authedUser, questions }) {
     answeredQuestions,
     unansweredQuestions,
   }
+}
+
+Home.propTypes = {
+  authedUser: PropTypes.string,
+  unansweredQuestions: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  ),
+  answeredQuestions: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  ),
 }
 
 export default connect(mapStateToProps)(Home)

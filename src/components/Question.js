@@ -1,5 +1,7 @@
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
@@ -48,6 +50,7 @@ const Question = ({ question, author }) => {
     </Card>
   )
 }
+
 function mapStateToProps({ authedUser, users, questions }, { id }) {
   const question = questions[id]
   const author = users[question.author]
@@ -57,6 +60,12 @@ function mapStateToProps({ authedUser, users, questions }, { id }) {
     question,
     author,
   }
+}
+
+Question.propTypes = {
+  authedUser: PropTypes.string,
+  question: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  author: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 }
 
 export default connect(mapStateToProps)(Question)

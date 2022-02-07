@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
@@ -80,6 +81,10 @@ const LeaderInfo = ({ leader }) => {
       </Paper>
     </Box>
   )
+}
+
+LeaderInfo.propTypes = {
+  leader: PropTypes.object.isRequired,
 }
 
 export default LeaderInfo

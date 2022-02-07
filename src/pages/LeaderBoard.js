@@ -1,6 +1,8 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+
 import LeaderInfo from '../components/LeaderInfo'
 
 const LeaderBoard = ({ authedUser, users }) => {
@@ -35,6 +37,11 @@ function mapStateToProps({ authedUser, users }) {
     authedUser,
     users: usersArr ? usersArr.sort((a, b) => b.score - a.score) : [],
   }
+}
+
+LeaderBoard.propTypes = {
+  authedUser: PropTypes.string,
+  users: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default connect(mapStateToProps)(LeaderBoard)

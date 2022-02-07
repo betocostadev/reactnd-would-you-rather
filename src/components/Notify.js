@@ -1,4 +1,6 @@
 import { forwardRef } from 'react'
+import PropTypes from 'prop-types'
+
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert from '@mui/material/Alert'
 
@@ -18,6 +20,13 @@ const Notify = ({ open, severity, message, handleClose }) => {
       </Alert>
     </Snackbar>
   )
+}
+
+Notify.propTypes = {
+  open: PropTypes.bool.isRequired,
+  severity: PropTypes.string,
+  message: PropTypes.string,
+  handleClose: PropTypes.func.isRequired,
 }
 
 export default Notify
